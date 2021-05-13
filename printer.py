@@ -108,12 +108,14 @@ class printer():
         self.set_pos(self.x, self.y, self.z+20)
         self.write(b"G28 X Y")
         self.read_until(c=b"ok")
+        self.get_pos()
 
     def go_home_xyz(self):
         self.check_limits(self.x, self.y, self.z+20, self.s)
         self.set_pos(self.x, self.y, self.z+20)
         self.write(b"G28 X Y Z")
         self.read_until(c=b"ok")
+        self.get_pos()
 
     def set_pos(self, x, y, z):
         self.write(f"G0 X {x:.1f} Y {y:.1f} Z {z:.1f} F6000".encode())
@@ -144,7 +146,7 @@ class printer():
         if self.limits["min_y"] <= y <= self.limits["max_y"]:
             self.y = y
         else:
-            print(f"Y out of bounds ({self.limits['min_y']:.1f} to  {self.limits['max_y']:.1f})")
+            print(f"Y out of bounds ({self.limits['min_y']:.1f} to {self.limits['max_y']:.1f})")
         if self.limits["min_z"] <= z <= self.limits["max_z"]:
             self.z = z
         else:
