@@ -11,7 +11,7 @@ The module has been tested on the following models:
 - Creality Ender3 (ender3)
 - Creality 6 SE (6se)
 
-## Example code for CR-6 SE##
+## Example code for CR-6 SE ##
 ```
 from glitch3d import printer
 
