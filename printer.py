@@ -28,11 +28,11 @@ class printer():
 
         self.limits = {
             "min_x" : 0.0,
-            "max_x" : 230.0,
+            "max_x" : 0.0,
             "min_y" : 0.0,
-            "max_y" : 230.0,
+            "max_y" : 0.0,
             "min_z" : 0.0,
-            "max_z" : 250.0,
+            "max_z" : 0.0,
             "min_s" : 0.1,
             "max_s" : 100.0,
         }
@@ -49,10 +49,6 @@ class printer():
         except serial.SerialException as e:
             raise type(e)(f"Cannot send : {e.strerror}")
         
-        print(self.read_until(b'\n0\n0'))
-        time.sleep(2)
-        self.get_pos()
-
     def write(self, data=b""):
         if not self.connected:
             raise serial.SerialException("Not connected.")
