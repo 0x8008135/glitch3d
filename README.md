@@ -9,7 +9,7 @@ Some printers may not behave identically, therefore branches with specific setti
 
 The module has been tested on the following models:
 - Creality Ender3 (ender3)
-- Creality 6 SE (master)
+- Creality 6 SE (6se)
 
 ## Example code for CR-6 SE##
 ```
