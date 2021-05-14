@@ -1,6 +1,56 @@
 # Glitch3d #
 **THIS MODULE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND**
 
+## Chip ##
+This module creates an array of position which is used as an iterator to move around a defined area.
+
+The module supports few algorithms which may be used by the user to discover areas of interests:
+
+* Typewriter (`chip.lr = True`)
+    Return to beginning after reching the line (`chip.vertical = False`) or column (`chip.vertical = True`)
+
+* Random (`chip.random = True`)
+    Shuffle the coordinates
+
+* Vertical (`chip.vertical = True`)
+    Iterates vertically rather than horizontally
+
+* Reverse (`chip.reverse = True`)
+    Flip the coordinates (start from furthest)
+
+### Example code ##
+```
+from glitch3d import chip
+
+target = chip()
+
+# origin
+target.offset_x = 0.0
+target.offset_y = 0.0
+
+# chip definition
+target.x_max = 250.0
+target.y_max = 250.0
+
+# steps
+target.steps = 10
+
+target.lr = False
+target.random = False
+target.vertical = False
+target.reverse = False
+
+#start iterator
+myiter = iter(target)
+for x in range(0,50):
+    new_pos = next(target)
+
+```
+
+A jupyter notebook is available to play around and visualize the chosen algorithm movements.
+
+
+## Printer ##
 This module offers basic functions to drive a 3D Marlin compatible printer through USB (e.g. to perform FI attacks).
 
 The master branch will be kept as generic as possible.
