@@ -51,13 +51,9 @@ A jupyter notebook is available to play around and visualize the chosen algorith
 ## Printer ##
 This module offers basic functions to drive a 3D Marlin compatible printer through USB (e.g. to perform FI attacks).
 
-The master branch will be kept as generic as possible.
-
-Some printers may not behave identically, therefore branches with specific settings are available for fundamental differences.
-
-The module has been tested on the following models:
-- Creality Ender3 (ender3)
-- Creality 6 SE (6se)
+The master branch will be kept as generic as possible and has been tested on the following models successfully:
+- Creality Ender3
+- Creality 6 SE
 
 ## Example code for CR-6 SE ##
 ```
