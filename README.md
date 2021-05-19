@@ -61,7 +61,6 @@ from glitch3d import printer
 
 # Define Serial port settings
 serial_port = "/dev/ttyUSB0" # or set to None for automatic detection
-serial_port = None 
 serial_baud = 115200
 serial_timeout = 1
 
