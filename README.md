@@ -40,10 +40,8 @@ target.random = False
 target.vertical = False
 target.reverse = False
 
-#start iterator
-myiter = iter(target)
-for x in range(0,50):
-    new_pos = next(target)
+for position in target:
+    print(position)
 
 ```
 

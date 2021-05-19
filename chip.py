@@ -75,9 +75,13 @@ class chip():
 
         self.counter = 0
         
-        return iter(self.coordinates[self.counter])
+        return self
 
 
     def __next__(self):
         self.counter += 1
-        return self.coordinates[self.counter]
+        if self.counter < len(self.coordinates):
+            return self.coordinates[self.counter]
+        else:
+            raise StopIteration
+
