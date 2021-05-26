@@ -1,87 +1,96 @@
 import numpy as np
-import random
 
-class chip():
+
+class chip:
     def __init__(self):
-        self.counter = 0
-
         # origin
-        self.offset_x = 0.0
-        self.offset_y = 0.0
-        
+        self._home_x = 0.0
+        self._home_y = 0.0
+
         # max value for X Y
-        self.x_max = 0.0
-        self.y_max = 0.0
-        
+        self._end_x = 0.0
+        self._end_y = 0.0
+
         # steps
         self.steps = 0.0
 
-        self.lr = False        
-        self.reverse = False
-        self.random = False
-        self.vertical = False
+    def __len__(self):
+        X, Y = self._generate_mesh()
+        return len(X) * len(Y)
 
-        
-    def __iter__(self):
-        x=np.arange(self.offset_x,self.offset_x+self.x_max+self.steps,self.steps)
-        y=np.arange(self.offset_y,self.offset_y+self.y_max+self.steps,self.steps)
-        
-        XX,YY =  np.meshgrid(x,y)
-        
-        if self.lr == False:
-            ###############
-            # default mode#
-            # 0 >->->->-v #
-            # 1 v-<-<-<-< #
-            # 2 >->->->-> #
-            ###############
-            for x in range(0,len(XX)):
-                if x%2:
-                    XX[x] = XX[x][::-1]
-
-        self.coordinates=np.vstack([XX.ravel(), YY.ravel()]).T
-
-        if self.reverse == True and self.vertical == True:
-            ###############
-            # rev+ver.mode#
-            # 0 v<.|v<.|v #
-            # 1 v|^|v|^|v #
-            # 2 .|^<.|^<. #
-            ###############
-            self.coordinates=np.vstack(np.fliplr(np.flipud([XX.ravel(), YY.ravel()]))).T
+    def _generate_mesh(self):
+        """
+        Generate the base mesh. Based on the relative positions and the steps
+        """
+        if self._home_x > self._end_x:
+            x_steps = -self.steps
         else:
-            if self.vertical == True:
-                ################
-                # vertical mode#
-                # 0 .>v|.>v|^>.#
-                # 1 ^|v|^|v|^|v#
-                # 2 ^|.>^|.>^|v#
-                ################
-                self.coordinates=np.vstack(np.flipud([XX.ravel(), YY.ravel()])).T
-            
-            if self.reverse == True:
-                ################
-                # reverse  mode#
-                # 0 v-<-<-<-<-<#
-                # 1 .->->->->-v#
-                # 2 v-<-<-<-<-.#
-                ################
-                self.coordinates=np.vstack(np.fliplr([XX.ravel(), YY.ravel()])).T
-        
-        
-        if self.random == True:
-            # true randomness ;)
-            self.coordinates = np.random.permutation(self.coordinates)  
+            x_steps = self.steps
+        x = np.arange(self._home_x, self._end_x + x_steps, x_steps)
 
-        self.counter = 0
-        
-        return self
-
-
-    def __next__(self):
-        self.counter += 1
-        if self.counter < len(self.coordinates):
-            return self.coordinates[self.counter]
+        if self._home_y > self._end_y:
+            y_steps = -self.steps
         else:
-            raise StopIteration
+            y_steps = self.steps
+        y = np.arange(self._home_y, self._end_y + y_steps, y_steps)
 
+        X, Y = np.meshgrid(x, y)
+        for i in range(len(X)):
+            if i % 2:
+                X[i] = X[i][::-1]
+        return X, Y
+
+    def set_home(self, x, y):
+        """
+        Set home X and Y coordinates
+        """
+        self._home_x = x
+        self._home_y = y
+
+    def set_end(self, x, y):
+        """
+        Set end (ie. opposite corner) X and Y coordinates
+        """
+        self._end_x = x
+        self._end_y = y
+
+    def random(self):
+        """
+        Randomly test all positions
+        """
+        X, Y = self._generate_mesh()
+        coordinates = np.vstack([X.ravel(), Y.ravel()]).T
+        coordinates = np.random.permutation(coordinates)
+        for x, y in coordinates:
+            yield (x, y)
+
+    def horizontal(self):
+        """
+        Scan region horizontally (X) first
+        """
+        ###############
+        # default mode#
+        # 0 >->->->-v #
+        # 1 v-<-<-<-< #
+        # 2 >->->->-> #
+        ###############
+        X, Y = self._generate_mesh()
+        coordinates = np.vstack([X.ravel(), Y.ravel()]).T
+        for x, y in coordinates:
+            yield (x, y)
+
+    def vertical(self):
+        """
+        Scan region vertically (Y) first
+        """
+        ################
+        # vertical mode#
+        # 0 .>v|.>v|^>.#
+        # 1 ^|v|^|v|^|v#
+        # 2 ^|.>^|.>^|v#
+        ################
+        X, Y = self._generate_mesh()
+        coordinates = np.vstack([X.ravel(), Y.ravel()]).T
+        coordinates = np.vstack(np.flipud([X.ravel(), Y.ravel()])).T
+        for x, y in coordinates:
+            yield (x, y)
