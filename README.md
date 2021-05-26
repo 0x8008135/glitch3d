@@ -4,19 +4,16 @@
 ## Chip ##
 This module creates an array of position which is used as an iterator to move around a defined area.
 
+The area is defined by a home point and an end point. once these coordinates have been set, calling the various functions will iterate over the whole area by `chip.steps` steps.
+
 The module supports few algorithms which may be used by the user to discover areas of interests:
 
-* Typewriter (`chip.lr = True`)
-    Return to beginning after reching the line (`chip.vertical = False`) or column (`chip.vertical = True`)
+* `hozizontal()` scans the area from the home position to the end position by iterating over the X axis first
 
-* Random (`chip.random = True`)
-    Shuffle the coordinates
+* `vertical()` scans the whole area by iterating ofer the Y axis first.
 
-* Vertical (`chip.vertical = True`)
-    Iterates vertically rather than horizontally
+* `random()` will randomly scan the whole area.
 
-* Reverse (`chip.reverse = True`)
-    Flip the coordinates (start from furthest)
 
 ### Example code ##
 ```
@@ -25,22 +22,15 @@ from glitch3d import chip
 target = chip()
 
 # origin
-target.offset_x = 0.0
-target.offset_y = 0.0
+target.set_home(0,0)
 
 # chip definition
-target.x_max = 250.0
-target.y_max = 250.0
+target.set_end(250,250)
 
 # steps
 target.steps = 10
 
-target.lr = False
-target.random = False
-target.vertical = False
-target.reverse = False
-
-for position in target:
+for position in target.horizontal():
     print(position)
 
 ```
