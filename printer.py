@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import click
 import re
+import configparser
 
+import click
 import serial
 import serial.tools.list_ports
-import time
 
 class printer():
     def __init__(self, port=None, baudrate=115200, timeout=None):
@@ -48,6 +48,12 @@ class printer():
             self._serialport = serial.Serial(self.port, baudrate=115200, timeout=None)
         except serial.SerialException as e:
             raise type(e)(f"Cannot send : {e.strerror}")
+
+    def load_settings(self, filename):
+        config = configparser.ConfigParser()
+        config.read(filename)
+        if "LIMITS" in config.sections():
+            self.limits = dict(config["LIMITS"])
         
     def write(self, data=b""):
         if not self.connected:
