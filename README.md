@@ -58,14 +58,7 @@ serial_timeout = 1
 p = printer(port=serial_port,baudrate=serial_baud, timeout=serial_timeout)
 
 # Define printer bed limits (mm)
-p.limits["min_x"] = 0.0
-p.limits["max_x"] = 235.0
-p.limits["min_y"] = 0.0
-p.limits["max_y"] = 235.0
-p.limits["min_z"] = 0.0
-p.limits["max_z"] = 250.0
-p.limits["min_s"] = 0.1
-p.limits["max_s"] = 100.0
+p.load_settings("cr6s.ini")
 
 # Enter Manual mode
 p.manual()
