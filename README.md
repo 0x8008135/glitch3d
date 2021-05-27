@@ -57,7 +57,7 @@ serial_timeout = 1
 # Establish connection with the printer
 p = printer(port=serial_port,baudrate=serial_baud, timeout=serial_timeout)
 
-# Define printer bed limits (mm)
+# Load printer limits definitions from configuration file
 p.load_settings("cr6s.ini")
 
 # Enter Manual mode
