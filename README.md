@@ -58,7 +58,7 @@ serial_timeout = 1
 p = printer(port=serial_port,baudrate=serial_baud, timeout=serial_timeout)
 
 # Load printer limits definitions from configuration file
-p.load_settings("cr6s.ini")
+p.load_settings("settings/cr6s.ini")
 
 # Enter Manual mode
 p.manual()
