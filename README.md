@@ -10,9 +10,13 @@ The module supports few algorithms which may be used by the user to discover are
 
 * `hozizontal()` scans the area from the home position to the end position by iterating over the X axis first
 
-* `vertical()` scans the whole area by iterating ofer the Y axis first.
+* `vertical()` scans the area from the home position to the end position by iterating over the Y axis first
 
-* `random()` will randomly scan the whole area.
+* `random()` scans the area randomly
+
+* `spiral_inward()` scans the area from the home position to the center in spiral
+
+* `spiral_outward()` scans the area from the center in spiral
 
 
 ### Example code ##
