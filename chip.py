@@ -74,9 +74,10 @@ class chip:
         # 1 v-<-<-<-< #
         # 2 >->->->-> #
         ###############
+        it = 0
         y_start = self._home_y
         while y_start <= self._end_y:
-            if y_start % 2:
+            if it % 2:
                 x_start = self._end_x
                 while x_start >= self._home_x:
                     yield (x_start, y_start)
@@ -87,6 +88,7 @@ class chip:
                     yield (x_start, y_start)
                     x_start += self.steps 
             y_start += self.steps 
+            it += 1
 
     def vertical(self):
         """
@@ -98,9 +100,10 @@ class chip:
         # 1 ^|v|^|v|^|v#
         # 2 ^|.>^|.>^|v#
         ################
+        it = 0
         x_start = self._home_x
         while x_start <= self._end_x:
-            if x_start % 2:
+            if it % 2:
                 y_start = self._end_y
                 while y_start >= self._home_y:
                     yield (x_start, y_start)
@@ -111,6 +114,7 @@ class chip:
                     yield (x_start, y_start)
                     y_start += self.steps
             x_start += self.steps
+            it += 1
 
     def spiral_inward(self):
         """
