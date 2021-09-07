@@ -53,7 +53,8 @@ class printer():
         config = configparser.ConfigParser()
         config.read(filename)
         if "LIMITS" in config.sections():
-            self.limits = dict(config["LIMITS"])
+            for k, v in config.items("LIMITS"):
+                self.limits[k] = float(v)
         
     def write(self, data=b""):
         if not self.connected:
