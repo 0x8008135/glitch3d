@@ -40,6 +40,17 @@ class chip:
                 X[i] = X[i][::-1]
         return X, Y
 
+    def get_conf(self):
+        """
+        Return the current chip configuration
+        """
+        return f"""[chip]
+        home_x = {self._home_x}
+        home_y = {self._home_y}
+        end_x  = {self._end_x}
+        end_y  = {self._end_y}
+        steps  = {self.steps}"""
+
     def set_home(self, x, y):
         """
         Set home X and Y coordinates
